@@ -3,10 +3,11 @@
 
     <!-- common_toast -->
     <string name="toast_common_guide_finish">\'뒤로\' 버튼을 한번 더 누르면 종료됩니다.</string>
-    <string name="toast_common_network_fail">네트워크 또는 시스템 오류입니다. 네트워크를 확인해주세요.</string>
+    <string name="toast_common_network_fail">\'네트워크 오류\'\n인터넷 연결상태를 확인해주세요.</string>
+    <string name="toast_common_text_none">검색어를 입력해주세요.</string>
 
     <!-- activity_main -->
-    <string name="main_ed_search">검색하실 이미지를 입력해보세요.</string>
+    <string name="main_ed_search">검색하실 이미지를 입력해주세요.</string>
     <string name="main_result_none">검색결과가 없습니다.</string>
 
     <!-- menu_sort -->

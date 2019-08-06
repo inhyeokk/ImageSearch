@@ -19,6 +19,7 @@ import com.rkddlsgur983.kakaopay.R
 import com.rkddlsgur983.kakaopay.api.APIConst
 import com.rkddlsgur983.kakaopay.databinding.ActivityMainBinding
 import com.rkddlsgur983.kakaopay.model.SearchImage
+import com.rkddlsgur983.kakaopay.util.BasicUtils
 import com.rkddlsgur983.kakaopay.viewmodel.MainViewModel
 import java.util.ArrayList
 
@@ -58,19 +59,19 @@ class MainActivity : AppCompatActivity() {
                 sort = APIConst.SORT_ACCURACY
                 initData()
                 setData()
-                Toast.makeText(applicationContext, R.string.menu_sort_accuracy, Toast.LENGTH_SHORT).show()
+                BasicUtils.showToast(applicationContext, R.string.menu_sort_accuracy)
             }
             R.id.menu_sort_recency -> {
                 sort = APIConst.SORT_RECENCY
                 initData()
                 setData()
-                Toast.makeText(applicationContext, R.string.menu_sort_recency, Toast.LENGTH_SHORT).show()
+                BasicUtils.showToast(applicationContext, R.string.menu_sort_recency)
             }
             R.id.menu_init -> {
                 sort = APIConst.SORT_ACCURACY
                 initData()
                 clearText()
-                Toast.makeText(applicationContext, R.string.menu_init, Toast.LENGTH_SHORT).show()
+                BasicUtils.showToast(applicationContext, R.string.menu_init)
             }
             else -> {
                 // do nothing
@@ -145,6 +146,11 @@ class MainActivity : AppCompatActivity() {
             if (it != null) {
                 searchImage = it
                 documentAdapter.addAll(it.documents)
+                if (it.documents.isEmpty()) {
+                    BasicUtils.showToast(applicationContext, R.string.main_result_none)
+                }
+            } else {
+                BasicUtils.showToast(applicationContext, R.string.toast_common_network_fail)
             }
             stopLoading()
         })
@@ -157,8 +163,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setData() {
-        startLoading()
-        viewModel.findImages(binding.edSearch.text.toString(), sort, page)
+        if (binding.edSearch.text.isNotEmpty()) {
+            startLoading()
+            viewModel.findImages(binding.edSearch.text.toString(), sort, page)
+        } else {
+            BasicUtils.showToast(applicationContext, R.string.toast_common_text_none)
+        }
     }
 
     private fun clearText() {
