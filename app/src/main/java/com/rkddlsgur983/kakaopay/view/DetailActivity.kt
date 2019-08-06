@@ -6,11 +6,14 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.databinding.DataBindingUtil
 import com.rkddlsgur983.kakaopay.BR
-import com.rkddlsgur983.kakaopay.R
 import com.rkddlsgur983.kakaopay.databinding.ActivityDetailBinding
 import com.rkddlsgur983.kakaopay.model.Document
 import android.content.Intent
 import android.net.Uri
+import com.jakewharton.rxbinding2.view.clicks
+import com.jakewharton.rxbinding2.view.longClicks
+import com.rkddlsgur983.kakaopay.R
+import com.rkddlsgur983.kakaopay.viewmodel.DetailViewModel
 
 
 class DetailActivity : AppCompatActivity() {
@@ -20,15 +23,16 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private lateinit var binding: ActivityDetailBinding
+    private val viewModel = DetailViewModel()
 
     private lateinit var document: Document
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_detail)
-        document = intent.getSerializableExtra("DOCUMENT_DATA") as Document
 
-        bind(document)
+        initView()
+        initObservable()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -39,11 +43,15 @@ class DetailActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
 
         when (item?.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+            }
+
             R.id.menu_detail_open -> {
                 openUrl(document.docUrl)
             }
             R.id.menu_detail_save -> {
-
+                viewModel.saveImage(document)
             }
             else -> {
                 // do nothing
@@ -53,9 +61,32 @@ class DetailActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    private fun getData() {
+        document = intent.getSerializableExtra("DOCUMENT_DATA") as Document
+    }
+
     private fun bind(data: Document) {
         binding.setVariable(BR.document, data)
         binding.executePendingBindings()
+    }
+
+    private fun initView() {
+
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        getData()
+        bind(document)
+    }
+
+    private fun initObservable() {
+
+        viewModel.bind(
+            binding.ivImage.clicks().subscribe {
+                openUrl(document.docUrl)
+            },
+            binding.ivImage.longClicks().subscribe {
+                viewModel.saveImage(document)
+            }
+        )
     }
 
     private fun openUrl(url: String) {
