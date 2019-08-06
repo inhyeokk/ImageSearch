@@ -31,7 +31,7 @@ object APIConnectionManager {
         }.build()
 
         retrofit = Retrofit.Builder().apply {
-//            baseUrl(APIConst.API_URL)
+//            baseUrl(APISecret.API_URL)
             baseUrl("")
             client(okHttpClient)
             addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -48,7 +48,7 @@ object APIConnectionManager {
 
             val request = chainRequest.newBuilder().apply{
                 addHeader("Content-Type", "application/x-www-form-urlencoded")
-                addHeader("Authorization", "KakaoAK " + APIConst.API_KEY)
+//                addHeader("Authorization", "KakaoAK " + APISecret.API_KEY)
             }.build()
 
             Log.d("REQUEST", request.body().toString())
