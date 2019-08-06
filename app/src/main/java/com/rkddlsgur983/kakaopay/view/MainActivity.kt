@@ -136,6 +136,8 @@ class MainActivity : AppCompatActivity() {
                     searchImage?.let {
                         if (!it.meta.isEnd) {
                             viewModel.findImages(binding.edSearch.text.toString(), sort, ++page)
+                        } else {
+                            BasicUtils.showToast(applicationContext, R.string.toast_common_last_page)
                         }
                     }
                 }
@@ -200,9 +202,9 @@ class MainActivity : AppCompatActivity() {
     private val documentItemListener = object: DocumentItemListener {
 
         override fun onDocumentClick(view: View, position: Int) {
-            Log.d("ddd", "" + position)
+
             val intent = Intent(applicationContext, DetailActivity::class.java)
-            intent.putExtra("DOCUMENT_DATA", searchImage!!.documents[position])
+            intent.putExtra("DOCUMENT_DATA", documentAdapter.getItem()[position])
             startActivity(intent)
         }
     }

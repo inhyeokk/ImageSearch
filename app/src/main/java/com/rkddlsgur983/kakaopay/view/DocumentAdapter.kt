@@ -35,6 +35,8 @@ class DocumentAdapter(
 
     override fun getItemCount(): Int = documents.size
 
+    fun getItem(): ArrayList<Document> = documents
+
     fun addAll(documents: ArrayList<Document>) {
         val oldSize = itemCount
         this.documents.addAll(documents)

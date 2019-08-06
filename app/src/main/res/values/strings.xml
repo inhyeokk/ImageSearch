@@ -5,6 +5,7 @@
     <string name="toast_common_guide_finish">\'뒤로\' 버튼을 한번 더 누르면 종료됩니다.</string>
     <string name="toast_common_network_fail">\'네트워크 오류\'\n인터넷 연결상태를 확인해주세요.</string>
     <string name="toast_common_text_none">검색어를 입력해주세요.</string>
+    <string name="toast_common_last_page">마지막 페이지입니다.</string>
 
     <!-- activity_main -->
     <string name="main_ed_search">검색하실 이미지를 입력해주세요.</string>
@@ -14,4 +15,17 @@
     <string name="menu_sort_accuracy">정확도순</string>
     <string name="menu_sort_recency">최신순</string>
     <string name="menu_init">초기화</string>
+
+    <!-- activity_detail -->
+    <string name="detail_collection">%1$s > %2$s</string>
+    <string name="detail_collection_blog">블로그</string>
+    <string name="detail_collection_news">뉴스</string>
+    <string name="detail_collection_cafe">카페</string>
+    <string name="detail_collection_efc">웹문서</string>
+    <string name="detail_divider">|</string>
+
+    <!-- menu_detail -->
+    <string name="menu_detail_open">페이지 열기</string>
+    <string name="menu_detail_save">이미지 저장</string>
+
 </resources>

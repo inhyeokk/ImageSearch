@@ -1,23 +1,16 @@
 package com.rkddlsgur983.kakaopay.util
 
-import android.content.Context
-import android.widget.TextView
-import android.widget.Toast
-
-class BasicUtils {
+class BindUtils {
 
     companion object {
 
-        fun showToast(context: Context, msg: Int) {
-            Toast.makeText(context, context.getString(msg), Toast.LENGTH_SHORT).show()
+        @JvmStatic
+        fun setTitleUrl(url: String): String {
+            return ""
         }
 
-        fun setTitleUrl(view: TextView, url: String?) {
-
-            view.text = url
-        }
-
-        fun setCollection(collection: String?, displaySiteName: String?): String {
+        @JvmStatic
+        fun setCollection(collection: String, displaySiteName: String): String {
 
             var result = ""
             when (collection) {
@@ -44,9 +37,10 @@ class BasicUtils {
             }
         }
 
-        fun setDateTime(view: TextView, dateTime: String?) {
-            val date = dateTime!!.split("T")
-            view.text = date[0]
+        @JvmStatic
+        fun setDateTime(dateTime: String): String {
+            val date = dateTime.split("T")
+            return date[0]
         }
     }
 }
