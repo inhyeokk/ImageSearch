@@ -43,6 +43,9 @@ class MainActivity : AppCompatActivity() {
     private var sort = APIConst.SORT_ACCURACY
     private var page: Int = 1
 
+    private var backKeyPressedTime = 0L
+    private lateinit var toast: Toast
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
@@ -82,6 +85,20 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() {
+
+        if (System.currentTimeMillis() > backKeyPressedTime + 2000) {
+            backKeyPressedTime = System.currentTimeMillis()
+            toast = BasicUtils.makeToast(applicationContext, R.string.toast_common_guide_finish)
+            toast.show()
+            return
+        }
+        if (System.currentTimeMillis() <= backKeyPressedTime + 2000) {
+            toast.cancel()
+            finish()
+        }
     }
     
     private fun initView() {
