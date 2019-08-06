@@ -21,12 +21,12 @@ class MainViewModel: ViewModel() {
         compositeDisposable.addAll(*disposables)
     }
 
-    fun findImages(query: String, page: Int) {
+    fun findImages(query: String, sort: String, page: Int) {
 
         val retrofitService: APIInterface
                 = APIConnectionManager.getRetrofitService(APIInterface::class.java)
 
-        retrofitService.findImages(query, APIConst.SORT_ACCURACY, page, APIConst.SIZE_TWENTY)
+        retrofitService.findImages(query, sort, page, APIConst.SIZE_TWENTY)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe({

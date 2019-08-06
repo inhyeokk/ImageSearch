@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_sort_accuracy"
+        android:title="@string/menu_sort_accuracy"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_sort_recency"
+        android:title="@string/menu_sort_recency"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_init"
+        android:title="@string/menu_init"
+        app:showAsAction="never" />
+</menu>

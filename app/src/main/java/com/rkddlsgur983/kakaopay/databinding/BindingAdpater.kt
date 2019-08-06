@@ -23,7 +23,8 @@ object BindingAdapter {
                     .load(url)
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .skipMemoryCache(true)
-                    .placeholder(R.drawable.ic_loading)
+                    .override(300)
+                    .placeholder(R.drawable.ic_none)
                     .into(view)
             }
         }

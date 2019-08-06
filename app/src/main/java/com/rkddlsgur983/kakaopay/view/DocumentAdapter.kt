@@ -31,8 +31,9 @@ class DocumentAdapter(val documents: ArrayList<Document>): RecyclerView.Adapter<
     override fun getItemCount(): Int = documents.size
 
     fun addAll(documents: ArrayList<Document>) {
+        val oldSize = itemCount
         this.documents.addAll(documents)
-        notifyDataSetChanged()
+        notifyItemRangeInserted(oldSize, documents.size)
     }
 
     fun clear() {
