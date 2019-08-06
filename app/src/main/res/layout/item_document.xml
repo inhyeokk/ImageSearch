@@ -4,7 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable name="document" type="com.rkddlsgur983.kakaopay.model.Document" />
+        <variable
+            name="holder"
+            type="com.rkddlsgur983.kakaopay.view.DocumentAdapter.DocumentViewHolder"/>
+        <variable
+            name="document"
+            type="com.rkddlsgur983.kakaopay.model.Document" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,6 +24,7 @@
             android:elevation="2dp"
             android:adjustViewBounds="true"
             android:src="@{document.imageUrl}"
+            android:onClick="@{holder::onClick}"
             android:padding="2dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

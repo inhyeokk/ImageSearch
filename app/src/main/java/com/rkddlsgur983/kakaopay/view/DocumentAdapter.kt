@@ -1,6 +1,7 @@
 package com.rkddlsgur983.kakaopay.view
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -8,8 +9,12 @@ import com.rkddlsgur983.kakaopay.BR
 import com.rkddlsgur983.kakaopay.R
 import com.rkddlsgur983.kakaopay.databinding.ItemDocumentBinding
 import com.rkddlsgur983.kakaopay.model.Document
+import com.rkddlsgur983.kakaopay.view.listener.DocumentItemListener
 
-class DocumentAdapter(val documents: ArrayList<Document>): RecyclerView.Adapter<DocumentAdapter.DocumentViewHolder>() {
+class DocumentAdapter(
+    private val documents: ArrayList<Document>,
+    private val documentItemListener: DocumentItemListener
+): RecyclerView.Adapter<DocumentAdapter.DocumentViewHolder>() {
 
     companion object {
         val TAG: String = "DOCUMENT_ADAPTER"
@@ -20,7 +25,7 @@ class DocumentAdapter(val documents: ArrayList<Document>): RecyclerView.Adapter<
         val binding: ItemDocumentBinding = DataBindingUtil.inflate(layoutInflater,
             R.layout.item_document, parent, false)
 
-        val documentBinding = DocumentViewHolder(binding)
+        val documentBinding = DocumentViewHolder(binding, documentItemListener)
         return documentBinding
     }
 
@@ -41,11 +46,19 @@ class DocumentAdapter(val documents: ArrayList<Document>): RecyclerView.Adapter<
         notifyDataSetChanged()
     }
 
-    class DocumentViewHolder(private val binding: ItemDocumentBinding): RecyclerView.ViewHolder(binding.root) {
+    class DocumentViewHolder(
+        private val binding: ItemDocumentBinding,
+        private val documentItemListener: DocumentItemListener
+    ): RecyclerView.ViewHolder(binding.root) {
 
         fun bind(data: Document) {
+            binding.holder = this
             binding.setVariable(BR.document, data)
             binding.executePendingBindings()
+        }
+
+        fun onClick(v: View) {
+            documentItemListener.onDocumentClick(v, adapterPosition)
         }
     }
 }

@@ -1,6 +1,8 @@
 package com.rkddlsgur983.kakaopay.view
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -11,6 +13,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.jakewharton.rxbinding2.support.v4.widget.refreshes
+import com.jakewharton.rxbinding2.support.v7.widget.RxRecyclerViewAdapter
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.view.scrollChangeEvents
 import com.jakewharton.rxbinding2.widget.editorActions
@@ -20,6 +23,7 @@ import com.rkddlsgur983.kakaopay.api.APIConst
 import com.rkddlsgur983.kakaopay.databinding.ActivityMainBinding
 import com.rkddlsgur983.kakaopay.model.SearchImage
 import com.rkddlsgur983.kakaopay.util.BasicUtils
+import com.rkddlsgur983.kakaopay.view.listener.DocumentItemListener
 import com.rkddlsgur983.kakaopay.viewmodel.MainViewModel
 import java.util.ArrayList
 
@@ -84,7 +88,7 @@ class MainActivity : AppCompatActivity() {
 
         linearLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         linearLayoutManager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_NONE
-        documentAdapter = DocumentAdapter(ArrayList())
+        documentAdapter = DocumentAdapter(ArrayList(), documentItemListener)
 
         binding.recyclerView.apply {
             layoutManager = linearLayoutManager
@@ -143,8 +147,8 @@ class MainActivity : AppCompatActivity() {
         )
 
         viewModel.searchImageLiveData.observe(this, Observer {
+            searchImage = it
             if (it != null) {
-                searchImage = it
                 documentAdapter.addAll(it.documents)
                 if (it.documents.isEmpty()) {
                     BasicUtils.showToast(applicationContext, R.string.main_result_none)
@@ -191,5 +195,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun isProgressLoading(): Boolean {
         return binding.progressBar.visibility == View.VISIBLE
+    }
+
+    private val documentItemListener = object: DocumentItemListener {
+
+        override fun onDocumentClick(view: View, position: Int) {
+            Log.d("ddd", "" + position)
+            val intent = Intent(applicationContext, DetailActivity::class.java)
+            intent.putExtra("DOCUMENT_DATA", searchImage!!.documents[position])
+            startActivity(intent)
+        }
     }
 }

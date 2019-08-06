@@ -1,13 +1,14 @@
 package com.rkddlsgur983.kakaopay.model
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class SearchImage(
     
     val meta: Meta,
 
     val documents: ArrayList<Document>
-)
+): Serializable
 
 data class Meta (
 
@@ -19,7 +20,7 @@ data class Meta (
 
     @SerializedName("is_end")
     val isEnd: Boolean          // 현재 페이지가 마지막 페이지인지 여부. 값이 false이면 page를 증가시켜 다음 페이지를 요청할 수 있음.
-)
+): Serializable
 
 data class Document (
 
@@ -46,7 +47,7 @@ data class Document (
 
     @SerializedName("datetime")
     val dateTime: String        // 문서 작성시간. ISO 8601. [YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].000+[tz]
-) {
+): Serializable {
     override fun toString(): String {
         return "Document(collection='$collection', dateTime='$dateTime', displaySiteName='$displaySiteName', docUrl='$docUrl', height=$height, imageUrl='$imageUrl', thumbnailUrl='$thumbnailUrl', width=$width)"
     }
