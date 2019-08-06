@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity() {
     private var searchImage: SearchImage? = null
     private var sort = APIConst.SORT_ACCURACY
     private var page: Int = 1
+    private var title = ""
 
     private var backKeyPressedTime = 0L
     private lateinit var toast: Toast
@@ -183,12 +184,14 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerView.recycledViewPool.clear()
         documentAdapter.clear()
         page = 1
+        title = ""
     }
 
     private fun setData() {
         if (binding.edSearch.text.isNotEmpty()) {
             startLoading()
-            viewModel.findImages(binding.edSearch.text.toString(), sort, page)
+            title = binding.edSearch.text.toString()
+            viewModel.findImages(title, sort, page)
         } else {
             BasicUtils.showToast(applicationContext, R.string.toast_common_text_none)
         }
@@ -207,7 +210,8 @@ class MainActivity : AppCompatActivity() {
     private fun stopLoading() {
         if (isProgressLoading()) {
             binding.progressBar.visibility = View.GONE
-        } else if (binding.refreshLayout.isRefreshing) {
+        }
+        if (binding.refreshLayout.isRefreshing) {
             binding.refreshLayout.isRefreshing = false
         }
     }
@@ -221,6 +225,7 @@ class MainActivity : AppCompatActivity() {
         override fun onDocumentClick(view: View, position: Int) {
 
             val intent = Intent(applicationContext, DetailActivity::class.java)
+            intent.putExtra("TEXT_DATA", title)
             intent.putExtra("DOCUMENT_DATA", documentAdapter.getItem()[position])
             startActivity(intent)
         }

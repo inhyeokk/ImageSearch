@@ -25,6 +25,7 @@ class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
     private val viewModel = DetailViewModel()
 
+    private var title = ""
     private lateinit var document: Document
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,11 +63,13 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun getData() {
+        title = intent.getStringExtra("TEXT_DATA")
         document = intent.getSerializableExtra("DOCUMENT_DATA") as Document
     }
 
-    private fun bind(data: Document) {
-        binding.setVariable(BR.document, data)
+    private fun bind(title: String, document: Document) {
+        binding.setVariable(BR.title, title)
+        binding.setVariable(BR.document, document)
         binding.executePendingBindings()
     }
 
@@ -74,7 +77,7 @@ class DetailActivity : AppCompatActivity() {
 
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         getData()
-        bind(document)
+        bind(title, document)
     }
 
     private fun initObservable() {
