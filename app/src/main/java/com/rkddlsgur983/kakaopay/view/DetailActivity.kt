@@ -1,5 +1,8 @@
 package com.rkddlsgur983.kakaopay.view
 
+import android.Manifest
+import android.app.DownloadManager
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -9,21 +12,30 @@ import com.rkddlsgur983.kakaopay.BR
 import com.rkddlsgur983.kakaopay.databinding.ActivityDetailBinding
 import com.rkddlsgur983.kakaopay.model.Document
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Environment
+import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.view.longClicks
 import com.rkddlsgur983.kakaopay.R
+import com.rkddlsgur983.kakaopay.util.BasicUtils
 import com.rkddlsgur983.kakaopay.viewmodel.DetailViewModel
+import java.io.File
 
 
 class DetailActivity : AppCompatActivity() {
 
     companion object {
         const val TAG: String = "DETAIL_ACTIVITY"
+        const val REQUEST_WRITE_EXTERNAL_STORAGE = 1111
     }
 
     private lateinit var binding: ActivityDetailBinding
     private val viewModel = DetailViewModel()
+    private lateinit var downloadManager: DownloadManager
 
     private var title = ""
     private lateinit var document: Document
@@ -31,6 +43,7 @@ class DetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_detail)
+        downloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
 
         initView()
         initObservable()
@@ -52,7 +65,7 @@ class DetailActivity : AppCompatActivity() {
                 openUrl(document.docUrl)
             }
             R.id.menu_detail_save -> {
-                viewModel.saveImage(document)
+                getDialog()
             }
             else -> {
                 // do nothing
@@ -87,7 +100,7 @@ class DetailActivity : AppCompatActivity() {
                 openUrl(document.docUrl)
             },
             binding.ivImage.longClicks().subscribe {
-                viewModel.saveImage(document)
+                getDialog()
             }
         )
     }
@@ -97,5 +110,63 @@ class DetailActivity : AppCompatActivity() {
         val uri = Uri.parse(url)
         intent.data = uri
         startActivity(intent)
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+
+        when (requestCode) {
+            REQUEST_WRITE_EXTERNAL_STORAGE -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    saveImage(downloadManager, document)
+                }
+            }
+            else -> {
+                // do nothing
+            }
+        }
+    }
+
+    private fun getDialog() {
+        val dialog = AlertDialog.Builder(this)
+        dialog.apply {
+            setTitle(getString(R.string.download_dialog_title))
+            setMessage(getString(R.string.download_dialog_msg, title))
+            setPositiveButton(getString(R.string.download_dialog_positive), {
+                dialog, which -> getPermission()
+            })
+            setNegativeButton(getString(R.string.download_dialog_negative), {
+                dialog, which -> // do nothing
+            })
+            show()
+        }
+    }
+
+    private fun getPermission() {
+
+        val permissionCheck = ContextCompat.checkSelfPermission(applicationContext, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), REQUEST_WRITE_EXTERNAL_STORAGE)
+        } else {
+            // permission granted
+            saveImage(downloadManager, document)
+        }
+    }
+
+    private fun saveImage(downloadManager: DownloadManager, document: Document) {
+        val SAVE_FOLDER = getString(R.string.download_save_path)
+        val savePath = Environment.getExternalStorageDirectory().toString() + SAVE_FOLDER
+        val fileName = title + "_" + BasicUtils.getCurrentDate() + ".jpg"
+        val file = File(savePath, fileName)
+
+        val request = DownloadManager.Request(Uri.parse(document.imageUrl))
+            .setTitle(getString(R.string.download_dialog_title))
+            .setDescription(fileName)
+            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+            .setDestinationUri(Uri.fromFile(file))
+            .setAllowedOverMetered(true)
+            .setAllowedOverRoaming(true)
+
+        downloadManager.enqueue(request)
     }
 }

@@ -28,4 +28,13 @@
     <string name="menu_detail_open">페이지 열기</string>
     <string name="menu_detail_save">이미지 저장</string>
 
+    <!-- download dialog -->
+    <string name="download_dialog_title">이미지 저장</string>
+    <string name="download_dialog_msg">\'확인\'을 누르시면 %1$s 이미지가 갤러리에 저장됩니다.</string>
+    <string name="download_dialog_positive">확인</string>
+    <string name="download_dialog_negative">취소</string>
+
+    <!-- download_manager -->
+    <string name="download_save_path">/rkddlsgur983</string>
+
 </resources>
