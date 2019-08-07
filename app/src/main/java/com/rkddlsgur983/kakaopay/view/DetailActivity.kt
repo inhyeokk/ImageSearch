@@ -25,7 +25,6 @@ import com.rkddlsgur983.kakaopay.util.BasicUtils
 import com.rkddlsgur983.kakaopay.viewmodel.DetailViewModel
 import java.io.File
 
-
 class DetailActivity : AppCompatActivity() {
 
     companion object {

@@ -1,7 +1,6 @@
 package com.rkddlsgur983.kakaopay.util
 
 import android.content.Context
-import android.widget.TextView
 import android.widget.Toast
 import java.text.SimpleDateFormat
 import java.util.*
