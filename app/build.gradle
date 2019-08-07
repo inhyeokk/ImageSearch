@@ -13,10 +13,23 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-    buildTypes {
+    signingConfigs {
         release {
-            minifyEnabled false
+            storeFile file(kakao_image_search_keystore)
+            storePassword kakao_image_search_keystore_pass
+            keyAlias kakao_image_search_key_alias
+            keyPassword kakao_image_search_key_pass
+        }
+    }
+    buildTypes {
+        debug {
+
+        }
+        release {
+            debuggable true
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {
