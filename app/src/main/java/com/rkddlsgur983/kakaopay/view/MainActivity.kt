@@ -63,6 +63,10 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
 
         when (item?.itemId) {
+            R.id.menu_refresh -> {
+                initData()
+                setData()
+            }
             R.id.menu_sort_accuracy -> {
                 sort = APIConst.SORT_ACCURACY
                 initData()
@@ -92,7 +96,7 @@ class MainActivity : AppCompatActivity() {
 
         if (System.currentTimeMillis() > backKeyPressedTime + 2000) {
             backKeyPressedTime = System.currentTimeMillis()
-            toast = BasicUtils.makeToast(applicationContext, R.string.toast_common_guide_finish)
+            toast = BasicUtils.makeToast(applicationContext, R.string.toast_common_finish_repeat)
             toast.show()
             return
         }
@@ -194,6 +198,7 @@ class MainActivity : AppCompatActivity() {
             viewModel.findImages(title, sort, page)
         } else {
             BasicUtils.showToast(applicationContext, R.string.toast_common_text_none)
+            stopLoading()
         }
     }
 
