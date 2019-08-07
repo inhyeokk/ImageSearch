@@ -51,8 +51,6 @@ object APIConnectionManager {
 //                addHeader("Authorization", "KakaoAK " + APISecret.API_KEY)
             }.build()
 
-            Log.d("REQUEST", request.body().toString())
-
             return chain.proceed(request)
         }
     }
