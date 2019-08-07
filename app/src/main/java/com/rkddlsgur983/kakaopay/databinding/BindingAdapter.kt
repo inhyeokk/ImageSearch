@@ -24,7 +24,7 @@ object BindingAdapter {
                     .load(url)
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .skipMemoryCache(true)
-                    .override(300)
+                    .thumbnail(0.1f)
                     .placeholder(R.drawable.ic_none)
                     .into(view)
             }
