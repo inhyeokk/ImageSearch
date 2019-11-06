@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">카카오페이 강인혁</string>
+    <string name="app_name">카카오 이미지 검색</string>
 
     <!-- common_toast -->
     <string name="toast_common_finish_repeat">\'뒤로\' 버튼을 한번 더 누르면 종료됩니다.</string>
