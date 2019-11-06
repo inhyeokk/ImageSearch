@@ -1,4 +1,4 @@
-package com.rkddlsgur983.kakaopay.view
+package com.rkddlsgur983.kakaopay.view.detail
 
 import android.Manifest
 import android.app.DownloadManager
@@ -22,7 +22,6 @@ import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.view.longClicks
 import com.rkddlsgur983.kakaopay.R
 import com.rkddlsgur983.kakaopay.util.BasicUtils
-import com.rkddlsgur983.kakaopay.viewmodel.DetailViewModel
 import java.io.File
 
 class DetailActivity : AppCompatActivity() {
@@ -131,10 +130,10 @@ class DetailActivity : AppCompatActivity() {
             setTitle(getString(R.string.download_dialog_title))
             setMessage(getString(R.string.download_dialog_msg, title))
             setPositiveButton(getString(R.string.download_dialog_positive), {
-                dialog, which -> getPermission()
+                _, _ -> getPermission()
             })
             setNegativeButton(getString(R.string.download_dialog_negative), {
-                dialog, which -> // do nothing
+                _, _ -> // do nothing
             })
             show()
         }

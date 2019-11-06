@@ -1,4 +1,4 @@
-package com.rkddlsgur983.kakaopay.databinding
+package com.rkddlsgur983.kakaopay.view.main.adapter
 
 import android.net.Uri
 import android.widget.ImageView

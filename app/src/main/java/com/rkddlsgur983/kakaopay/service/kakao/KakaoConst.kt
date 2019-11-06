@@ -1,6 +1,6 @@
-package com.rkddlsgur983.kakaopay.api
+package com.rkddlsgur983.kakaopay.service.kakao
 
-class APIConst {
+class KakaoConst {
 
     companion object {
         val SORT_ACCURACY = "accuracy"

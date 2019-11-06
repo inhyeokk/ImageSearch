@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".view.DetailActivity">
+    tools:context=".view.detail.DetailActivity">
 
     <data>
         <import type="com.rkddlsgur983.kakaopay.util.BindUtils" />

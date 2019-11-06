@@ -1,5 +1,6 @@
-package com.rkddlsgur983.kakaopay.api
+package com.rkddlsgur983.kakaopay.service.retrofit
 
+import com.rkddlsgur983.kakaopay.service.kakao.KakaoKey
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
@@ -10,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
-object APIConnectionManager {
+object RetrofitManager {
 
     private val ALL_TIMEOUT = 10L
 
@@ -30,8 +31,8 @@ object APIConnectionManager {
         }.build()
 
         retrofit = Retrofit.Builder().apply {
-//            baseUrl(APISecret.API_URL)
-            baseUrl("")
+            baseUrl(KakaoKey.API_URL)
+//            baseUrl("")
             client(okHttpClient)
             addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             addConverterFactory(GsonConverterFactory.create())
@@ -47,7 +48,7 @@ object APIConnectionManager {
 
             val request = chainRequest.newBuilder().apply{
                 addHeader("Content-Type", "application/x-www-form-urlencoded")
-//                addHeader("Authorization", "KakaoAK " + APISecret.API_KEY)
+                addHeader("Authorization", "KakaoAK " + KakaoKey.API_KEY)
             }.build()
 
             return chain.proceed(request)

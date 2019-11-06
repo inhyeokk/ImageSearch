@@ -1,11 +1,11 @@
-package com.rkddlsgur983.kakaopay.viewmodel
+package com.rkddlsgur983.kakaopay.view.main
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.rkddlsgur983.kakaopay.api.APIConnectionManager
-import com.rkddlsgur983.kakaopay.api.APIConst
-import com.rkddlsgur983.kakaopay.api.APIInterface
+import com.rkddlsgur983.kakaopay.service.retrofit.RetrofitManager
+import com.rkddlsgur983.kakaopay.service.kakao.KakaoConst
+import com.rkddlsgur983.kakaopay.service.kakao.KakaoService
 import com.rkddlsgur983.kakaopay.model.SearchImage
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -23,10 +23,11 @@ class MainViewModel: ViewModel() {
 
     fun findImages(query: String, sort: String, page: Int) {
 
-        val retrofitService: APIInterface
-                = APIConnectionManager.getRetrofitService(APIInterface::class.java)
+        val kakaoService: KakaoService
+                = RetrofitManager.getRetrofitService(
+            KakaoService::class.java)
 
-        retrofitService.findImages(query, sort, page, APIConst.SIZE_TWENTY)
+        kakaoService.findImages(query, sort, page, KakaoConst.SIZE_TWENTY)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe({

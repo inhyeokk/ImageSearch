@@ -6,7 +6,7 @@
     <data>
         <variable
             name="holder"
-            type="com.rkddlsgur983.kakaopay.view.DocumentAdapter.DocumentViewHolder"/>
+            type="com.rkddlsgur983.kakaopay.view.main.adapter.DocumentAdapter.DocumentViewHolder"/>
         <variable
             name="document"
             type="com.rkddlsgur983.kakaopay.model.Document" />

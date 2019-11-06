@@ -1,4 +1,4 @@
-package com.rkddlsgur983.kakaopay.viewmodel
+package com.rkddlsgur983.kakaopay.view.detail
 
 import androidx.lifecycle.ViewModel
 import io.reactivex.disposables.CompositeDisposable

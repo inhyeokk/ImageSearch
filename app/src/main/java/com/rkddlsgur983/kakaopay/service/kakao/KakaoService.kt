@@ -1,10 +1,10 @@
-package com.rkddlsgur983.kakaopay.api
+package com.rkddlsgur983.kakaopay.service.kakao
 
 import com.rkddlsgur983.kakaopay.model.SearchImage
 import io.reactivex.Single
 import retrofit2.http.*
 
-interface APIInterface {
+interface KakaoService {
 
     @GET("/v2/search/image")
     fun findImages(
@@ -19,5 +19,5 @@ interface APIInterface {
 
         @Query("size")
         size: Int
-): Single<SearchImage>
+    ): Single<SearchImage>
 }

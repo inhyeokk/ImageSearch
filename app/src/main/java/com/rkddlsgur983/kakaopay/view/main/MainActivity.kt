@@ -1,4 +1,4 @@
-package com.rkddlsgur983.kakaopay.view
+package com.rkddlsgur983.kakaopay.view.main
 
 import android.content.Intent
 import android.os.Bundle
@@ -17,12 +17,13 @@ import com.jakewharton.rxbinding2.view.scrollChangeEvents
 import com.jakewharton.rxbinding2.widget.editorActions
 import com.jakewharton.rxbinding2.widget.textChanges
 import com.rkddlsgur983.kakaopay.R
-import com.rkddlsgur983.kakaopay.api.APIConst
+import com.rkddlsgur983.kakaopay.service.kakao.KakaoConst
 import com.rkddlsgur983.kakaopay.databinding.ActivityMainBinding
 import com.rkddlsgur983.kakaopay.model.SearchImage
 import com.rkddlsgur983.kakaopay.util.BasicUtils
-import com.rkddlsgur983.kakaopay.view.listener.DocumentItemListener
-import com.rkddlsgur983.kakaopay.viewmodel.MainViewModel
+import com.rkddlsgur983.kakaopay.view.detail.DetailActivity
+import com.rkddlsgur983.kakaopay.view.main.adapter.DocumentAdapter
+import com.rkddlsgur983.kakaopay.view.main.adapter.DocumentItemListener
 import java.util.ArrayList
 
 class MainActivity : AppCompatActivity() {
@@ -38,7 +39,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var linearLayoutManager: StaggeredGridLayoutManager
 
     private var searchImage: SearchImage? = null
-    private var sort = APIConst.SORT_ACCURACY
+    private var sort = KakaoConst.SORT_ACCURACY
     private var page: Int = 1
     private var title = ""
 
@@ -66,19 +67,19 @@ class MainActivity : AppCompatActivity() {
                 setData()
             }
             R.id.menu_sort_accuracy -> {
-                sort = APIConst.SORT_ACCURACY
+                sort = KakaoConst.SORT_ACCURACY
                 initData()
                 setData()
                 BasicUtils.showToast(applicationContext, R.string.menu_sort_accuracy)
             }
             R.id.menu_sort_recency -> {
-                sort = APIConst.SORT_RECENCY
+                sort = KakaoConst.SORT_RECENCY
                 initData()
                 setData()
                 BasicUtils.showToast(applicationContext, R.string.menu_sort_recency)
             }
             R.id.menu_init -> {
-                sort = APIConst.SORT_ACCURACY
+                sort = KakaoConst.SORT_ACCURACY
                 initData()
                 clearText()
                 BasicUtils.showToast(applicationContext, R.string.menu_init)
@@ -108,7 +109,8 @@ class MainActivity : AppCompatActivity() {
 
         linearLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         linearLayoutManager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_NONE
-        documentAdapter = DocumentAdapter(ArrayList(), documentItemListener)
+        documentAdapter =
+            DocumentAdapter(ArrayList(), documentItemListener)
 
         binding.recyclerView.apply {
             layoutManager = linearLayoutManager

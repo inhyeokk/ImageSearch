@@ -1,4 +1,4 @@
-package com.rkddlsgur983.kakaopay.view
+package com.rkddlsgur983.kakaopay.view.main.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +9,6 @@ import com.rkddlsgur983.kakaopay.BR
 import com.rkddlsgur983.kakaopay.R
 import com.rkddlsgur983.kakaopay.databinding.ItemDocumentBinding
 import com.rkddlsgur983.kakaopay.model.Document
-import com.rkddlsgur983.kakaopay.view.listener.DocumentItemListener
 
 class DocumentAdapter(
     private val documents: ArrayList<Document>,
